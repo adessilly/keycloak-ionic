@@ -1620,39 +1620,43 @@
                         var promise = createPromise();
                         var loginUrl = kc.createLoginUrl(options);
 
-                        window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
-                            window.cordova.plugins.browsertab.close();
+                        window.App.addListener('appUrlOpen', (data) => {
+                            window.Browser.close();
                             var oauth = parseCallback(data.url);
                             processCallback(oauth, promise);
                         });
 
-                        window.cordova.plugins.browsertab.openUrl(loginUrl);
+                        window.Browser.open({ url: loginUrl });
+
                         return promise.promise;
                     },
 
                     logout: function(options) {
                         var promise = createPromise();
                         var logoutUrl = kc.createLogoutUrl(options);
-
-                        window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
-                            window.cordova.plugins.browsertab.close();
+                        
+                        window.App.addListener('appUrlOpen', (data) => {
+                            window.Browser.close();
                             kc.clearToken();
                             promise.setSuccess();
                         });
 
-                        window.cordova.plugins.browsertab.openUrl(logoutUrl);
+                        window.Browser.open({ url: logoutUrl });
+
                         return promise.promise;
                     },
 
                     register : function(options) {
                         var promise = createPromise();
                         var registerUrl = kc.createRegisterUrl(options);
-                        window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
-                            window.cordova.plugins.browsertab.close();
+                        window.App.addListener('appUrlOpen', (data) => {
+                            window.Browser.close();
                             var oauth = parseCallback(data.url);
                             processCallback(oauth, promise);
                         });
-                        window.cordova.plugins.browsertab.openUrl(registerUrl);
+                        
+                        window.Browser.open({ url: registerUrl });
+
                         return promise.promise;
 
                     },
@@ -1686,7 +1690,7 @@
                         var promise = createPromise();
                         var loginUrl = kc.createLoginUrl(options);
 
-                        const addUrlListener = window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+                        const addUrlListener = window.App.addListener('appUrlOpen', (data) => {
                             var oauth = parseCallback(data.url);
                             processCallback(oauth, promise);
                             addUrlListener.remove();
@@ -1700,7 +1704,7 @@
                         var promise = createPromise();
                         var logoutUrl = kc.createLogoutUrl(options);
 
-                        const addUrlListener = window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+                        const addUrlListener = window.App.addListener('appUrlOpen', (data) => {
                             kc.clearToken();
                             promise.setSuccess();
                             addUrlListener.remove();
@@ -1713,7 +1717,7 @@
                     register : function(options) {
                         var promise = createPromise();
                         var registerUrl = kc.createRegisterUrl(options);
-                        window.Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+                        window.App.addListener('appUrlOpen', (data) => {
                             var oauth = parseCallback(data.url);
                             processCallback(oauth, promise);
                         });
